@@ -1,7 +1,7 @@
 #include "HistrogramStretcher.h"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 #include <iostream>
 
 using namespace cv;
@@ -30,8 +30,7 @@ Mat HistrogramStretcher::GetHistogram(const Mat& input)
 {
     const auto histogram = CalculateHistogram(input);
     cv::Mat histgramImage = Mat::zeros(256, 256, CV_8UC1);
-    const auto [minIt, maxIt] = minmax_element(histogram.cbegin(), histogram.cend());
-    const auto max = *maxIt;
+    const auto max = *minmax_element(histogram.cbegin(), histogram.cend()).second;
     size_t x = 0;
     for (const auto val : histogram)
     {

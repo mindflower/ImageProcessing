@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+
 namespace cv
 {
     class Mat;
@@ -16,4 +17,3 @@ private:
     std::vector<size_t> CalculateLookupTable(const cv::Mat& input, const std::vector<size_t>& histogram);
     cv::Mat ApplyEqualization(const cv::Mat& input, const std::vector<size_t>& lookupTable);
 };
-

@@ -1,5 +1,5 @@
 #include "RobertsFilter.h"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/imgproc.hpp>
 
 using namespace cv;
 using namespace std;
@@ -8,6 +8,7 @@ Mat RobertsFilter::ProcessImage(const Mat& input)
 {
     Mat output;
     input.copyTo(output);
+
     const vector<vector<int>> xKernel = { { 1, 0}, { 0, -1} };
     const vector<vector<int>> yKernel = { { 0, 1}, {-1,  0} };
 

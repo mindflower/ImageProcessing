@@ -1,5 +1,5 @@
 #include "HistogramEqualizer.h"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <iostream>
 
@@ -23,18 +23,17 @@ Mat HistogramEqualizer::Equalize(const cv::Mat& input)
 
 Mat HistogramEqualizer::GetHistogram(const Mat& input)
 {
-	const auto histogram = CalculateHistogram(input);
-	cv::Mat histgramImage = Mat::zeros(256, 256, CV_8UC1);
-	const auto [minIt, maxIt] = minmax_element(histogram.cbegin(), histogram.cend());
-	const auto max = *maxIt;
-	size_t x = 0;
-	for (const auto val : histogram)
-	{
-		const auto height = cvRound(val * 256.0 / max);
-		line(histgramImage, Point(x, 256 - height), Point(x, 256), Scalar::all(255));
-		++x;
-	}
-	return histgramImage;
+    const auto histogram = CalculateHistogram(input);
+    cv::Mat histgramImage = Mat::zeros(256, 256, CV_8UC1);
+    const auto max = *minmax_element(histogram.cbegin(), histogram.cend()).second;
+    size_t x = 0;
+    for (const auto val : histogram)
+    {
+        const auto height = cvRound(val * 256.0 / max);
+        line(histgramImage, Point(x, 256 - height), Point(x, 256), Scalar::all(255));
+        ++x;
+    }
+    return histgramImage;
 }
 
 vector<size_t> HistogramEqualizer::CalculateHistogram(const Mat& input)
